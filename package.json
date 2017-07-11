@@ -1,9 +1,9 @@
 {
-  "name": "material-ui-build",
+  "name": "@logicline/material-ui-build",
   "private": true,
-  "author": "Material-UI Team",
+  "author": "logicline GmbH",
   "version": "0.18.6",
-  "description": "React Components that Implement Google's Material Design.",
+  "description": "React Components that Implement Google's Material Design, based on Call-em-all's material-ui.",
   "main": "./src/index.js",
   "keywords": [
     "react",
@@ -13,11 +13,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/callemall/material-ui.git"
+    "url": "https://github.com/logiclinegmbh/material-ui.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/callemall/material-ui/issues"
+    "url": "https://github.com/logiclinegmbh/material-ui/issues"
   },
   "homepage": "http://material-ui.com/",
   "scripts": {

@@ -22,6 +22,10 @@ As always, we are focusing on bug fixes.
 
 N.A
 
+##### Customization by logicline
+
+- [DatePicker] Added `actionButtonStyle` to be passed to the Buttons of the Datepicker
+
 ## 0.18.5
 ###### _Jun 28, 2017_
 

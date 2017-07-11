@@ -40,6 +40,7 @@ class Calendar extends Component {
     open: PropTypes.bool,
     openToYearSelection: PropTypes.bool,
     shouldDisableDate: PropTypes.func,
+    actionButtonStyle: PropTypes.object,
     utils: PropTypes.object,
   };
 
@@ -316,6 +317,7 @@ class Calendar extends Component {
       okLabel,
       onTouchTapCancel, // eslint-disable-line no-unused-vars
       onTouchTapOk, // eslint-disable-line no-unused-vars
+      actionButtonStyle,
       utils,
     } = this.props;
 
@@ -385,6 +387,7 @@ class Calendar extends Component {
               okLabel={okLabel}
               onTouchTapCancel={onTouchTapCancel}
               onTouchTapOk={onTouchTapOk}
+              actionButtonStyle={actionButtonStyle}
             />
           }
         </div>

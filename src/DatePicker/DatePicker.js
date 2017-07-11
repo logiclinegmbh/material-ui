@@ -139,6 +139,10 @@ class DatePicker extends Component {
      */
     textFieldStyle: PropTypes.object,
     /**
+     * Override the inline-styles of DatePicker's Button elements.
+     */
+    actionButtonStyle: PropTypes.object,
+    /**
      * This object should contain methods needed to build the calendar system.
      *
      * Useful for building a custom calendar system. Refer to the
@@ -299,6 +303,7 @@ class DatePicker extends Component {
       hideCalendarDate,
       style,
       textFieldStyle,
+      actionButtonStyle,
       utils,
       ...other
     } = this.props;
@@ -337,6 +342,7 @@ class DatePicker extends Component {
           shouldDisableDate={shouldDisableDate}
           hideCalendarDate={hideCalendarDate}
           openToYearSelection={openToYearSelection}
+          actionButtonStyle={actionButtonStyle}
           utils={utils}
         />
       </div>

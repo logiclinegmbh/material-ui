@@ -32,6 +32,7 @@ class DatePickerDialog extends Component {
     openToYearSelection: PropTypes.bool,
     shouldDisableDate: PropTypes.func,
     style: PropTypes.object,
+    actionButtonStyle: PropTypes.object,
     utils: PropTypes.object,
   };
 
@@ -127,6 +128,7 @@ class DatePickerDialog extends Component {
       hideCalendarDate,
       style, // eslint-disable-line no-unused-vars
       animation,
+      actionButtonStyle,
       utils,
       ...other
     } = this.props;
@@ -183,6 +185,7 @@ class DatePickerDialog extends Component {
             openToYearSelection={openToYearSelection}
             shouldDisableDate={shouldDisableDate}
             hideCalendarDate={hideCalendarDate}
+            actionButtonStyle={actionButtonStyle}
             utils={utils}
           />
         </Container>
