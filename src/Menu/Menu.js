@@ -19,7 +19,7 @@ function getStyles(props, context) {
 
   const styles = {
     root: {
-      // Nested div bacause the List scales x faster than it scales y
+      // Nested div because the List scales x faster than it scales y
       zIndex: muiTheme.zIndex.menu,
       maxHeight: maxHeight,
       overflowY: maxHeight ? 'auto' : null,
@@ -235,6 +235,17 @@ class Menu extends Component {
       return;
     }
 
+    const {focusIndex} = this.state;
+    if (focusIndex < 0) {
+      return;
+    }
+
+    const filteredChildren = this.getFilteredChildren(this.props.children);
+    const focusedItem = filteredChildren[focusIndex];
+    if (focusedItem.props.menuItems && focusedItem.props.menuItems.length > 0) {
+      return;
+    }
+
     this.setFocusIndex(event, -1, false);
   };
 
@@ -289,9 +300,9 @@ class Menu extends Component {
 
       Object.assign(extraProps, {
         focusState: focusState,
-        onTouchTap: (event) => {
+        onClick: (event) => {
           this.handleMenuItemTouchTap(event, child, index);
-          if (child.props.onTouchTap) child.props.onTouchTap(event);
+          if (child.props.onClick) child.props.onClick(event);
         },
         ref: isFocused ? 'focusedMenuItem' : null,
       });

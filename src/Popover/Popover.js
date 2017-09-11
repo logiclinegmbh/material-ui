@@ -68,6 +68,14 @@ class Popover extends Component {
      */
     open: PropTypes.bool,
     /**
+     * Represents the parent scrollable container.
+     * It can be an element or a string like `window`.
+     */
+    scrollableContainer: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.string,
+    ]),
+    /**
      * Override the inline-styles of the root element.
      */
     style: PropTypes.object,
@@ -101,6 +109,7 @@ class Popover extends Component {
     canAutoPosition: true,
     onRequestClose: () => {},
     open: false,
+    scrollableContainer: 'window',
     style: {
       overflowY: 'auto',
     },
@@ -121,6 +130,8 @@ class Popover extends Component {
     this.handleResize = throttle(this.setPlacement, 100);
     this.handleScroll = throttle(this.setPlacement.bind(this, true), 50);
 
+    this.popoverRefs = {};
+
     this.state = {
       open: props.open,
       closing: false,
@@ -128,7 +139,7 @@ class Popover extends Component {
   }
 
   componentDidMount() {
-    this.setPlacement();
+    this.placementTimeout = setTimeout(this.setPlacement);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -164,12 +175,18 @@ class Popover extends Component {
   }
 
   componentDidUpdate() {
-    this.setPlacement();
+    clearTimeout(this.placementTimeout);
+    this.placementTimeout = setTimeout(this.setPlacement);
   }
 
   componentWillUnmount() {
     this.handleResize.cancel();
     this.handleScroll.cancel();
+
+    if (this.placementTimeout) {
+      clearTimeout(this.placementTimeout);
+      this.placementTimeout = null;
+    }
 
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -192,6 +209,7 @@ class Popover extends Component {
       style,
       targetOrigin,
       useLayerForClickAway, // eslint-disable-line no-unused-vars
+      scrollableContainer, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
 
@@ -275,11 +293,11 @@ class Popover extends Component {
       return;
     }
 
-    if (!this.refs.layer.getLayer()) {
+    if (!this.popoverRefs.layer.getLayer()) {
       return;
     }
 
-    const targetEl = this.refs.layer.getLayer().children[0];
+    const targetEl = this.popoverRefs.layer.getLayer().children[0];
     if (!targetEl) {
       return;
     }
@@ -304,8 +322,8 @@ class Popover extends Component {
       targetPosition = this.applyAutoPositionIfNeeded(anchor, target, targetOrigin, anchorOrigin, targetPosition);
     }
 
-    targetEl.style.top = `${Math.max(0, targetPosition.top)}px`;
-    targetEl.style.left = `${Math.max(0, targetPosition.left)}px`;
+    targetEl.style.top = `${targetPosition.top}px`;
+    targetEl.style.left = `${targetPosition.left}px`;
     targetEl.style.maxHeight = `${window.innerHeight}px`;
   };
 
@@ -395,12 +413,12 @@ class Popover extends Component {
     return (
       <div style={styles.root}>
         <EventListener
-          target="window"
+          target={this.props.scrollableContainer}
           onScroll={this.handleScroll}
           onResize={this.handleResize}
         />
         <RenderToLayer
-          ref="layer"
+          ref={(ref) => this.popoverRefs.layer = ref}
           open={this.state.open}
           componentClickAway={this.componentClickAway}
           useLayerForClickAway={this.props.useLayerForClickAway}

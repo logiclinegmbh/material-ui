@@ -156,7 +156,7 @@ describe('<AutoComplete />', () => {
             'bar',
           ],
           {
-            source: 'touchTap',
+            source: 'click',
           },
         ]);
         done();
@@ -207,6 +207,17 @@ describe('<AutoComplete />', () => {
       wrapper.find(Menu).props().onItemTouchTap({}, {
         key: 0,
       });
+      assert.strictEqual(wrapper.state().searchText, 'f');
+    });
+
+    it('handleChange should not call setState:searchText when searchText is controlled', () => {
+      const wrapper = shallowWithContext(
+        <AutoComplete
+          dataSource={['foo', 'bar']}
+          searchText="f"
+        />
+      );
+      wrapper.find(TextField).props().onChange({target: {value: 'fo'}});
       assert.strictEqual(wrapper.state().searchText, 'f');
     });
   });

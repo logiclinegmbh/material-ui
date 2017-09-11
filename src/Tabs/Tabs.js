@@ -211,13 +211,15 @@ class Tabs extends Component {
         index: index,
         selected: this.getSelected(tab, index),
         width: `${width}%`,
-        onTouchTap: this.handleTabTouchTap,
+        onClick: this.handleTabTouchTap,
       });
     });
 
-    const inkBar = this.state.selectedIndex !== -1 ? (
+    const realSelectedIndex = valueLink.value ? this.getSelectedIndex(this.props) : this.state.selectedIndex;
+
+    const inkBar = realSelectedIndex !== -1 ? (
       <InkBar
-        left={`${width * this.state.selectedIndex}%`}
+        left={`${width * realSelectedIndex}%`}
         width={`${width}%`}
         style={inkBarStyle}
       />
